@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>බෞද්ධ ධර්ම පුස්තකාලය හා මෘදුකාංග</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <span>📖</span> පුස්තකාලය
+      </a>
+      
+      <!-- Live Search Box -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="සෙවුම් පද මෙතැන යොදන්න..." oninput="filterItems()">
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Section 1: Educational Apps -->
+    <h2 class="section-title"><span>💻</span> බෞද්ධ අධ්‍යාපනික Apps</h2>
+    <div id="appsContainer" class="apps-grid">
+      <!-- data.js මඟින් apps ස්වයංක්‍රීයව මෙහි දිස්වේ -->
+    </div>
+
+    <!-- Section 2: PDF Books Library -->
+    <h2 class="section-title"><span>📚</span> අභිධර්ම ධර්ම ග්‍රන්ථ (PDF)</h2>
+
+    <div class="pdf-table">
+      <div class="table-header">
+        <span>ගොනු නම</span>
+        <span>ප්‍රවර්ගය</span>
+        <span>බාගත කිරීම්</span>
+        <span style="text-align: right;">ප්‍රමාණය</span>
+      </div>
+
+      <div id="pdfFileList">
+        <!-- data.js මඟින් PDF ගොනු මෙහි දිස්වේ -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Data & Logic File -->
+  <script src="data.js"></script>
+</body>
+</html>
