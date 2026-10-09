@@ -28,23 +28,15 @@ const booksData = [
     id: 1,
     title: "අභිධර්ම චිත්තවීථි විනිශ්චය - කඩුවෙල අතුලඤාණ හිමි 2026",
     category: "අභිධර්ම",
-    downloads: 1031,
+    downloads: 0,
     size: "5.7 MB",
-    pdfUrl: "#"
-  },
-  {
-    id: 2,
-    title: "අභිධර්ම මාතිකා අධ්‍යයන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
-    category: "අභිධර්ම",
-    downloads: 1961,
-    size: "4.2 MB",
     pdfUrl: "#"
   },
   {
     id: 3,
     title: "ධාතුකථා ප්‍රකරණ අධ්‍යයන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
-    downloads: 953,
+    downloads: 0,
     size: "5.9 MB",
     pdfUrl: "#"
   },
@@ -52,7 +44,7 @@ const booksData = [
     id: 4,
     title: "පට්ඨාන ත්‍රි රාශිය - නාඋයනේ අරියධම්ම හිමි, කඩුවෙල අතුලඤාණ හිමි 2022",
     category: "අභිධර්ම",
-    downloads: 2646,
+    downloads: 0,
     size: "3.3 MB",
     pdfUrl: "#"
   },
@@ -60,7 +52,7 @@ const booksData = [
     id: 5,
     title: "පට්ඨාන ප්‍රකරණ අධ්‍යයන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2024",
     category: "අභිධර්ම",
-    downloads: 1545,
+    downloads: 0,
     size: "12 MB",
     pdfUrl: "#"
   },
@@ -68,7 +60,7 @@ const booksData = [
     id: 6,
     title: "පට්ඨාන ප්‍රකරණ අධ්‍යයන ප්‍රවේශය, ශුද්ධ සංඛ්‍යා සහ ස්වරූපාරූඪ - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
-    downloads: 1718,
+    downloads: 0,
     size: "1.4 MB",
     pdfUrl: "#"
   },
@@ -76,7 +68,15 @@ const booksData = [
     id: 7,
     title: "පට්ඨාන මහාපකරණ සන්නය 2 - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
-    downloads: 869,
+    downloads: 0,
+    size: "4.3 MB",
+    pdfUrl: "#"
+  },
+    {
+    id: 8,
+    title: "අභිධර්ම මාතිකා අධ්‍යන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
+    category: "අභිධර්ම",
+    downloads: 0,
     size: "4.3 MB",
     pdfUrl: "#"
   }
