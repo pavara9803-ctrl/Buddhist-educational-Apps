@@ -3,23 +3,35 @@ name: Cache Busting
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'index.html'
 
 jobs:
   update-version:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Update version in index.html
         run: |
           VERSION=$(date +%s)
-          sed -i "s/data.js?v=[0-9]*/data.js?v=$VERSION/g" index.html
-          sed -i "s/main.css?v=[0-9]*/main.css?v=$VERSION/g" index.html
+          sed -i "s/data\.js?v=[0-9]*/data.js?v=$VERSION/g" index.html
+          sed -i "s/main\.css?v=[0-9]*/main.css?v=$VERSION/g" index.html
+          echo "New version: $VERSION"
       
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add index.html
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto update cache version"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto update cache version [skip ci]"
+            git push
+          fi
