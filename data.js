@@ -78,7 +78,7 @@ const booksData = [
     category: "අභිධර්ම",
     downloads: 0,
     size: "4.3 MB",
-    pdfUrl: "#"
+    pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-Matika.pdf"
   }
 ];
 
