@@ -1,4 +1,29 @@
+// ==========================================
+// Firebase Configuration
+// ==========================================
+const firebaseConfig = {
+  apiKey: "AIzaSyDEjIe7xsjQCqcPp2dHpWZufZ-SIM9BXCo",
+  authDomain: "buddhist-apps.firebaseapp.com",
+  databaseURL: "https://buddhist-apps-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "buddhist-apps",
+  storageBucket: "buddhist-apps.firebasestorage.app",
+  messagingSenderId: "59827119271",
+  appId: "1:59827119271:web:522edb63f4bed3191de782"
+};
+
+// Firebase initialize කරන්න (compat version)
+let db = null;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+  console.log("✅ Firebase initialized successfully");
+} catch (e) {
+  console.error("❌ Firebase initialization error:", e);
+}
+
+// ==========================================
 // බෞද්ධ අධ්‍යාපනික Apps දත්ත
+// ==========================================
 const appsData = [
   {
     id: 1,
@@ -7,7 +32,7 @@ const appsData = [
     platform: "Android / Web",
     badgeType: "tag-gold",
     description: "අභිධර්ම මාතිකා සහ ධම්මසංගණී විග්‍රහයන් අධ්‍යයනයට නිර්මාණය කළ සුවිශේෂී මෘදුකාංගය.",
-    apkUrl: "https://play.google.com/store/apps/details?id=app.vercel.matika_snowy.twa",
+    apkUrl: "https://github.com/pavara9803-ctrl/Matika/releases/latest/download/Matika.apk",
     webUrl: "https://pavara9803-ctrl.github.io/Matika/"
   },
   {
@@ -17,12 +42,14 @@ const appsData = [
     platform: "Android / Web",
     badgeType: "tag-blue",
     description: "පදරුපසිද්ධි ග්‍රන්ථය ඇසුරින් පාලි නාම හා ආඛ්‍යාත පද සාධනයන් හදාරන මෘදුකාංගය.",
-    apkUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/",
+    apkUrl: "https://github.com/pavara9803-ctrl/Rupasiddhi/releases/latest/download/Rupasiddhi.apk",
     webUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/"
   }
 ];
 
+// ==========================================
 // PDF පොත් නාමාවලිය දත්ත
+// ==========================================
 const booksData = [
   {
     id: 1,
@@ -31,18 +58,17 @@ const booksData = [
     downloads: 0,
     size: "4.3 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-Matika.pdf",
-    countKey: "abhidhamma-matika"  // CountAPI සඳහා unique key
+    countKey: "abhidhamma-matika"
   }
 ];
 
-// CountAPI සැකසුම්
-const COUNT_API_NAMESPACE = "pavara9803-buddhist-apps";
-
-// වෙබ් පිටුවේ අයිතම පෙන්වීම (Render DOM)
+// ==========================================
+// Render Functions
+// ==========================================
 function renderContent() {
   renderApps(appsData);
   renderBooks(booksData);
-  loadAllDownloadCounts(); // බාගත කිරීම් ගණන load කරන්න
+  loadAllDownloadCounts();
 }
 
 // Apps Render කිරීම
@@ -82,9 +108,7 @@ function renderBooks(books) {
   container.innerHTML = books.map(book => `
     <a href="${book.pdfUrl}" 
        class="table-row" 
-       data-book-id="${book.id}"
-       data-count-key="${book.countKey}"
-       onclick="handleDownload(event, '${book.countKey}')"
+       onclick="handleDownload('${book.countKey}')"
        download 
        target="_blank" 
        rel="noopener noreferrer">
@@ -100,11 +124,15 @@ function renderBooks(books) {
 }
 
 // ==========================================
-// බාගත කිරීම් ගණන කළමනාකරණය (CountAPI)
+// Firebase Download Count Functions
 // ==========================================
 
 // සියලුම පොත් වල බාගත කිරීම් ගණන load කරන්න
 function loadAllDownloadCounts() {
+  if (!db) {
+    console.warn("⚠️ Firebase not initialized");
+    return;
+  }
   booksData.forEach(book => {
     if (book.countKey) {
       getDownloadCount(book.countKey);
@@ -114,41 +142,31 @@ function loadAllDownloadCounts() {
 
 // එක් පොතක බාගත කිරීම් ගණන ලබා ගන්න
 function getDownloadCount(countKey) {
-  const url = `https://api.countapi.xyz/get/${COUNT_API_NAMESPACE}/${countKey}`;
-  
-  fetch(url)
-    .then(response => {
-      if (!response.ok) throw new Error('Count not found');
-      return response.json();
-    })
-    .then(data => {
-      updateCountDisplay(countKey, data.value);
+  db.ref('downloads/' + countKey).once('value')
+    .then(snapshot => {
+      const count = snapshot.val() || 0;
+      updateCountDisplay(countKey, count);
     })
     .catch(error => {
-      // Counter එක තවම නොපවතී නම් 0 ලෙස පෙන්වන්න
-      console.log(`Counter for ${countKey} not yet created`);
+      console.error('Error reading count:', error);
       updateCountDisplay(countKey, 0);
     });
 }
 
 // බාගත කිරීම් ගණන වැඩි කරන්න
 function incrementDownloadCount(countKey) {
-  const url = `https://api.countapi.xyz/hit/${COUNT_API_NAMESPACE}/${countKey}`;
+  if (!db || !countKey) return;
   
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      updateCountDisplay(countKey, data.value);
-    })
-    .catch(error => {
-      console.error('Error incrementing count:', error);
-      // දෝෂයක් වුවහොත් locally එකකින් වැඩි කරන්න
-      const element = document.getElementById(`count-${countKey}`);
-      if (element) {
-        const current = parseInt(element.textContent) || 0;
-        element.textContent = current + 1;
-      }
-    });
+  const ref = db.ref('downloads/' + countKey);
+  ref.transaction(current => {
+    return (current || 0) + 1;
+  }).then(result => {
+    if (result.committed) {
+      updateCountDisplay(countKey, result.snapshot.val());
+    }
+  }).catch(error => {
+    console.error('Error incrementing count:', error);
+  });
 }
 
 // Display එක යාවත්කාලීන කරන්න
@@ -160,13 +178,15 @@ function updateCountDisplay(countKey, value) {
 }
 
 // බාගත කිරීම handle කිරීම
-function handleDownload(event, countKey) {
-  // Counter එක වැඩි කරන්න (background එකේ)
-  incrementDownloadCount(countKey);
-  // බාගත කිරීම සිදුවීමට ඉඩ දෙන්න (event.preventDefault() නොකරන්න)
+function handleDownload(countKey) {
+  if (countKey) {
+    incrementDownloadCount(countKey);
+  }
 }
 
-// සජීවී සෙවුම් පද්ධතිය (Live Search)
+// ==========================================
+// Live Search
+// ==========================================
 function filterItems() {
   const query = document.getElementById("searchInput").value.trim().toLowerCase();
 
@@ -185,7 +205,9 @@ function filterItems() {
   renderApps(filteredApps);
 }
 
+// ==========================================
 // පිටුව Load වූ පසු ආරම්භ කිරීම
+// ==========================================
 if (document.readyState === 'loading') {
   document.addEventListener("DOMContentLoaded", renderContent);
 } else {

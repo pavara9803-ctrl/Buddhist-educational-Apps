@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>බෞද්ධ ධර්ම පුස්තකාලය හා මෘදුකාංග</title>
-  <link rel="stylesheet" href="main.css?v=1791566989">
+  <link rel="stylesheet" href="main.css?v=1">
 </head>
 <body>
 
@@ -48,12 +48,16 @@
 
   </main>
 
+  <!-- Firebase SDK (compat version - සරල භාවිතය සඳහා) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
   <!-- data.js with auto cache busting -->
   <script>
     (function() {
       const version = new Date().getTime();
       const script = document.createElement('script');
-      script.src = 'data.js?v=1791566989' + version;
+      script.src = 'data.js?v=' + version;
       document.body.appendChild(script);
     })();
   </script>
