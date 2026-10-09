@@ -24,21 +24,25 @@ const appsData = [
 
 // PDF පොත් නාමාවලිය දත්ත
 const booksData = [
-
   {
     id: 1,
     title: "අභිධර්ම මාතිකා අධ්‍යන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
     downloads: 0,
     size: "4.3 MB",
-    pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-Matika.pdf"
+    pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-Matika.pdf",
+    countKey: "abhidhamma-matika"  // CountAPI සඳහා unique key
   }
 ];
+
+// CountAPI සැකසුම්
+const COUNT_API_NAMESPACE = "pavara9803-buddhist-apps";
 
 // වෙබ් පිටුවේ අයිතම පෙන්වීම (Render DOM)
 function renderContent() {
   renderApps(appsData);
   renderBooks(booksData);
+  loadAllDownloadCounts(); // බාගත කිරීම් ගණන load කරන්න
 }
 
 // Apps Render කිරීම
@@ -76,16 +80,90 @@ function renderBooks(books) {
   }
 
   container.innerHTML = books.map(book => `
-    <a href="${book.pdfUrl}" class="table-row" download target="_blank" rel="noopener noreferrer">
+    <a href="${book.pdfUrl}" 
+       class="table-row" 
+       data-book-id="${book.id}"
+       data-count-key="${book.countKey}"
+       onclick="handleDownload(event, '${book.countKey}')"
+       download 
+       target="_blank" 
+       rel="noopener noreferrer">
       <div class="file-col-title">
         <span class="pdf-badge">PDF</span>
         <span class="file-text">${book.title}</span>
       </div>
       <span class="file-col-cat">${book.category}</span>
-      <span class="file-col-count">${book.downloads}</span>
+      <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
       <span class="file-col-size">${book.size}</span>
     </a>
   `).join("");
+}
+
+// ==========================================
+// බාගත කිරීම් ගණන කළමනාකරණය (CountAPI)
+// ==========================================
+
+// සියලුම පොත් වල බාගත කිරීම් ගණන load කරන්න
+function loadAllDownloadCounts() {
+  booksData.forEach(book => {
+    if (book.countKey) {
+      getDownloadCount(book.countKey);
+    }
+  });
+}
+
+// එක් පොතක බාගත කිරීම් ගණන ලබා ගන්න
+function getDownloadCount(countKey) {
+  const url = `https://api.countapi.xyz/get/${COUNT_API_NAMESPACE}/${countKey}`;
+  
+  fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error('Count not found');
+      return response.json();
+    })
+    .then(data => {
+      updateCountDisplay(countKey, data.value);
+    })
+    .catch(error => {
+      // Counter එක තවම නොපවතී නම් 0 ලෙස පෙන්වන්න
+      console.log(`Counter for ${countKey} not yet created`);
+      updateCountDisplay(countKey, 0);
+    });
+}
+
+// බාගත කිරීම් ගණන වැඩි කරන්න
+function incrementDownloadCount(countKey) {
+  const url = `https://api.countapi.xyz/hit/${COUNT_API_NAMESPACE}/${countKey}`;
+  
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      updateCountDisplay(countKey, data.value);
+    })
+    .catch(error => {
+      console.error('Error incrementing count:', error);
+      // දෝෂයක් වුවහොත් locally එකකින් වැඩි කරන්න
+      const element = document.getElementById(`count-${countKey}`);
+      if (element) {
+        const current = parseInt(element.textContent) || 0;
+        element.textContent = current + 1;
+      }
+    });
+}
+
+// Display එක යාවත්කාලීන කරන්න
+function updateCountDisplay(countKey, value) {
+  const element = document.getElementById(`count-${countKey}`);
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+// බාගත කිරීම handle කිරීම
+function handleDownload(event, countKey) {
+  // Counter එක වැඩි කරන්න (background එකේ)
+  incrementDownloadCount(countKey);
+  // බාගත කිරීම සිදුවීමට ඉඩ දෙන්න (event.preventDefault() නොකරන්න)
 }
 
 // සජීවී සෙවුම් පද්ධතිය (Live Search)
@@ -108,4 +186,8 @@ function filterItems() {
 }
 
 // පිටුව Load වූ පසු ආරම්භ කිරීම
-document.addEventListener("DOMContentLoaded", renderContent);
+if (document.readyState === 'loading') {
+  document.addEventListener("DOMContentLoaded", renderContent);
+} else {
+  renderContent();
+}
