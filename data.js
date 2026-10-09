@@ -32,7 +32,7 @@ const appsData = [
     platform: "Android / Web",
     badgeType: "tag-gold",
     description: "අභිධර්ම මාතිකා සහ ධම්මසංගණී විග්‍රහයන් අධ්‍යයනයට නිර්මාණය කළ සුවිශේෂී මෘදුකාංගය.",
-    apkUrl: "https://github.com/pavara9803-ctrl/Matika/releases/latest/download/Matika.apk",
+    apkUrl: "https://play.google.com/store/apps/details?id=app.vercel.matika_snowy.twa",
     webUrl: "https://pavara9803-ctrl.github.io/Matika/",
     screenshots: [
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.png",
