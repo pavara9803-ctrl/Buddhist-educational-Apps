@@ -72,7 +72,7 @@ const booksData = [
     size: "4.3 MB",
     pdfUrl: "#"
   },
-    {
+  {
     id: 8,
     title: "අභිධර්ම මාතිකා අධ්‍යන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
@@ -123,7 +123,7 @@ function renderBooks(books) {
   }
 
   container.innerHTML = books.map(book => `
-    <a href="${book.pdfUrl}" class="table-row">
+    <a href="${book.pdfUrl}" class="table-row" download target="_blank" rel="noopener noreferrer">
       <div class="file-col-title">
         <span class="pdf-badge">PDF</span>
         <span class="file-text">${book.title}</span>
