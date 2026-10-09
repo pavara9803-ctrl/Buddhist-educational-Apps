@@ -2,7 +2,7 @@
 const appsData = [
   {
     id: 1,
-    title: "මාතිකා (Matika)",
+    title: "අභිධර්ම මාතිකා (Matika)",
     category: "අභිධර්මය",
     platform: "Android / Web",
     badgeType: "tag-gold",
