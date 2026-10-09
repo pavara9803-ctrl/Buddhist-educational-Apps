@@ -33,7 +33,12 @@ const appsData = [
     badgeType: "tag-gold",
     description: "අභිධර්ම මාතිකා සහ ධම්මසංගණී විග්‍රහයන් අධ්‍යයනයට නිර්මාණය කළ සුවිශේෂී මෘදුකාංගය.",
     apkUrl: "https://github.com/pavara9803-ctrl/Matika/releases/latest/download/Matika.apk",
-    webUrl: "https://pavara9803-ctrl.github.io/Matika/"
+    webUrl: "https://pavara9803-ctrl.github.io/Matika/",
+    screenshots: [
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-2.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-3.png"
+    ]
   },
   {
     id: 2,
@@ -43,7 +48,11 @@ const appsData = [
     badgeType: "tag-blue",
     description: "පදරුපසිද්ධි ග්‍රන්ථය ඇසුරින් පාලි නාම හා ආඛ්‍යාත පද සාධනයන් හදාරන මෘදුකාංගය.",
     apkUrl: "https://github.com/pavara9803-ctrl/Rupasiddhi/releases/latest/download/Rupasiddhi.apk",
-    webUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/"
+    webUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/",
+    screenshots: [
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-1.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-2.png"
+    ]
   }
 ];
 
@@ -71,28 +80,46 @@ function renderContent() {
   loadAllDownloadCounts();
 }
 
-// Apps Render කිරීම
+// Apps Render කිරීම (screenshots සමඟ)
 function renderApps(apps) {
   const container = document.getElementById("appsContainer");
   if (!container) return;
 
-  container.innerHTML = apps.map(app => `
-    <div class="app-box">
-      <div class="app-header">
-        <h3 class="app-title">${app.title}</h3>
-        <span class="tag ${app.badgeType}">${app.category}</span>
+  container.innerHTML = apps.map(app => {
+    // Screenshots HTML එක සාදන්න (screenshots තිබේ නම් පමණක්)
+    const screenshotsHTML = app.screenshots && app.screenshots.length > 0 ? `
+      <div class="app-screenshots">
+        <div class="screenshots-scroll">
+          ${app.screenshots.map((img, index) => `
+            <img src="${img}" 
+                 alt="${app.title} - Screenshot ${index + 1}" 
+                 class="screenshot-img"
+                 loading="lazy"
+                 onclick="openLightbox('${img}', '${app.title}')">
+          `).join("")}
+        </div>
       </div>
-      <p class="app-desc">${app.description}</p>
-      <div class="app-actions">
-        <a href="${app.apkUrl}" download class="btn-apk">
-          <span>📥</span> APK බාගත කරන්න
-        </a>
-        <a href="${app.webUrl}" target="_blank" rel="noopener noreferrer" class="btn-web">
-          Online භාවිතය ↗
-        </a>
+    ` : "";
+
+    return `
+      <div class="app-box">
+        <div class="app-header">
+          <h3 class="app-title">${app.title}</h3>
+          <span class="tag ${app.badgeType}">${app.category}</span>
+        </div>
+        <p class="app-desc">${app.description}</p>
+        ${screenshotsHTML}
+        <div class="app-actions">
+          <a href="${app.apkUrl}" download class="btn-apk">
+            <span>📥</span> APK බාගත කරන්න
+          </a>
+          <a href="${app.webUrl}" target="_blank" rel="noopener noreferrer" class="btn-web">
+            Online භාවිතය ↗
+          </a>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 // Books Table Render කිරීම
@@ -121,6 +148,38 @@ function renderBooks(books) {
       <span class="file-col-size">${book.size}</span>
     </a>
   `).join("");
+}
+
+// ==========================================
+// Lightbox (Screenshot විශාල කර පෙන්වීම)
+// ==========================================
+function openLightbox(imageSrc, title) {
+  // දැනටමත් lightbox එකක් තිබේ නම් ඉවත් කරන්න
+  const existing = document.getElementById("lightbox");
+  if (existing) existing.remove();
+
+  const lightbox = document.createElement("div");
+  lightbox.id = "lightbox";
+  lightbox.className = "lightbox";
+  lightbox.innerHTML = `
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img src="${imageSrc}" alt="${title}" class="lightbox-img">
+    <p class="lightbox-caption">${title}</p>
+  `;
+  lightbox.onclick = function(e) {
+    if (e.target === lightbox) closeLightbox();
+  };
+  document.body.appendChild(lightbox);
+
+  // ESC යතුරෙන් වැසීමට
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeLightbox();
+  });
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox) lightbox.remove();
 }
 
 // ==========================================
