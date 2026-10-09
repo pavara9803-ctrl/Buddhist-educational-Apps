@@ -35,7 +35,9 @@ body {
   padding: 0 20px;
 }
 
-/* Header */
+/* ==========================================
+   Header
+   ========================================== */
 .site-header {
   background-color: #181818;
   border-bottom: 1px solid var(--border-color);
@@ -94,7 +96,9 @@ body {
   color: #777;
 }
 
-/* Section Titles */
+/* ==========================================
+   Section Titles
+   ========================================== */
 .section-title {
   font-family: var(--font-heading);
   font-size: 1.45rem;
@@ -105,7 +109,9 @@ body {
   gap: 8px;
 }
 
-/* Apps Grid */
+/* ==========================================
+   Apps Grid
+   ========================================== */
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -131,6 +137,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 10px;
+  gap: 10px;
 }
 
 .app-title {
@@ -144,6 +151,7 @@ body {
   padding: 2px 8px;
   border-radius: 4px;
   font-family: var(--font-ui);
+  white-space: nowrap;
 }
 
 .tag-gold { background: #3d2f13; color: var(--accent-gold); }
@@ -200,7 +208,110 @@ body {
   color: #fff;
 }
 
-/* PDF Files List Table */
+/* ==========================================
+   App Screenshots
+   ========================================== */
+.app-screenshots {
+  margin: 14px 0;
+  border-top: 1px solid var(--border-color);
+  padding-top: 14px;
+}
+
+.screenshots-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-gold) var(--bg-hover);
+}
+
+.screenshots-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.screenshots-scroll::-webkit-scrollbar-track {
+  background: var(--bg-hover);
+  border-radius: 3px;
+}
+
+.screenshots-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 3px;
+}
+
+.screenshot-img {
+  height: 180px;
+  width: auto;
+  max-width: 220px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.screenshot-img:hover {
+  transform: scale(1.05);
+  border-color: var(--accent-gold);
+}
+
+/* ==========================================
+   Lightbox (Screenshot විශාල කර පෙන්වීම)
+   ========================================== */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  cursor: zoom-out;
+}
+
+.lightbox-img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--accent-gold);
+}
+
+.lightbox-caption {
+  color: var(--accent-gold);
+  margin-top: 16px;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 44px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 300;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.lightbox-close:hover {
+  color: var(--accent-gold);
+}
+
+/* ==========================================
+   PDF Files List Table
+   ========================================== */
 .pdf-table {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
@@ -283,6 +394,9 @@ body {
   font-weight: 600;
 }
 
+/* ==========================================
+   Mobile ප්‍රතිචාරාත්මක (Responsive)
+   ========================================== */
 @media (max-width: 768px) {
   .table-header, .table-row {
     grid-template-columns: 1fr 80px;
@@ -292,114 +406,58 @@ body {
   .table-header span:nth-child(3) {
     display: none;
   }
-}
-/* ==========================================
-   App Screenshots
-   ========================================== */
-.app-screenshots {
-  margin: 14px 0;
-  border-top: 1px solid var(--border-color);
-  padding-top: 14px;
-}
 
-.screenshots-scroll {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-gold) var(--bg-hover);
-}
-
-.screenshots-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.screenshots-scroll::-webkit-scrollbar-track {
-  background: var(--bg-hover);
-  border-radius: 3px;
-}
-
-.screenshots-scroll::-webkit-scrollbar-thumb {
-  background: var(--accent-gold);
-  border-radius: 3px;
-}
-
-.screenshot-img {
-  height: 200px;
-  width: auto;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-  flex-shrink: 0;
-  object-fit: cover;
-}
-
-.screenshot-img:hover {
-  transform: scale(1.05);
-  border-color: var(--accent-gold);
-}
-
-/* ==========================================
-   Lightbox (Screenshot විශාල කර පෙන්වීම)
-   ========================================== */
-.lightbox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.92);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-  cursor: zoom-out;
-}
-
-.lightbox-img {
-  max-width: 90%;
-  max-height: 80vh;
-  border-radius: 10px;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
-  border: 2px solid var(--accent-gold);
-}
-
-.lightbox-caption {
-  color: var(--accent-gold);
-  margin-top: 16px;
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  text-align: center;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 44px;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 300;
-  line-height: 1;
-  transition: color 0.2s;
-}
-
-.lightbox-close:hover {
-  color: var(--accent-gold);
-}
-
-/* Mobile ප්‍රතිචාරාත්මක */
-@media (max-width: 768px) {
   .screenshot-img {
-    height: 150px;
+    height: 140px;
+    max-width: 170px;
   }
+
   .lightbox-close {
     top: 10px;
     right: 15px;
     font-size: 36px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .app-actions {
+    flex-direction: column;
+  }
+
+  .btn-apk, .btn-web {
+    width: 100%;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand {
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .app-title {
+    font-size: 1.15rem;
+  }
+
+  .screenshot-img {
+    height: 120px;
+    max-width: 150px;
   }
 }

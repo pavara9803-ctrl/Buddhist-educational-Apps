@@ -37,7 +37,9 @@ const appsData = [
     screenshots: [
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.png",
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-2.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-3.png"
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-3.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-4.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-5.png"
     ]
   },
   {
