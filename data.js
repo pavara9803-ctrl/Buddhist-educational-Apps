@@ -7,7 +7,7 @@ const appsData = [
     platform: "Android / Web",
     badgeType: "tag-gold",
     description: "අභිධර්ම මාතිකා සහ ධම්මසංගණී විග්‍රහයන් අධ්‍යයනයට නිර්මාණය කළ සුවිශේෂී මෘදුකාංගය.",
-    apkUrl: "https://github.com/pavara9803-ctrl/Matika/releases/latest/download/Matika.apk",
+    apkUrl: "https://play.google.com/store/apps/details?id=app.vercel.matika_snowy.twa",
     webUrl: "https://pavara9803-ctrl.github.io/Matika/"
   },
   {
@@ -17,7 +17,7 @@ const appsData = [
     platform: "Android / Web",
     badgeType: "tag-blue",
     description: "පදරුපසිද්ධි ග්‍රන්ථය ඇසුරින් පාලි නාම හා ආඛ්‍යාත පද සාධනයන් හදාරන මෘදුකාංගය.",
-    apkUrl: "https://github.com/pavara9803-ctrl/Rupasiddhi/releases/latest/download/Rupasiddhi.apk",
+    apkUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/",
     webUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/"
   }
 ];
