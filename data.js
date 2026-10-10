@@ -53,7 +53,10 @@ const appsData = [
     webUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/",
     screenshots: [
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-1.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-2.png"
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-2.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-3.png",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-4.png"
+
     ]
   }
 ];
