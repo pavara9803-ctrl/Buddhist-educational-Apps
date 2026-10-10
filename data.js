@@ -62,7 +62,6 @@ const appsData = [
 
 // ==========================================
 // PDF පොත් නාමාවලිය දත්ත
-// (folder ක්ෂේත්‍රය මගින් ෆෝල්ඩර අනුව කාණ්ඩගත කෙරේ)
 // ==========================================
 const booksData = [
   {
@@ -187,7 +186,7 @@ function renderApps(apps) {
   }).join("");
 }
 
-// Books Table Render කිරීම (ෆෝල්ඩර අනුව කාණ්ඩගත කර - Collapsible)
+// Books Table Render කිරීම (Collapsible folders)
 function renderBooks(books) {
   const container = document.getElementById("pdfFileList");
   if (!container) return;
@@ -205,8 +204,8 @@ function renderBooks(books) {
     grouped[folder].push(book);
   });
 
-  // එක් එක් ෆෝල්ඩරය සඳහා Collapsible HTML සාදන්න
-  container.innerHTML = Object.keys(grouped).map((folderName, index) => `
+  // Collapsible folder HTML සාදන්න
+  container.innerHTML = Object.keys(grouped).map(folderName => `
     <div class="folder-group">
       <div class="folder-header" onclick="toggleFolder(this)">
         <span class="folder-arrow">▶</span>
@@ -242,14 +241,19 @@ function toggleFolder(headerElement) {
   const folderBooks = folderGroup.querySelector(".folder-books");
   const arrow = headerElement.querySelector(".folder-arrow");
 
-  if (folderBooks.style.display === "none" || folderBooks.style.display === "") {
-    folderBooks.style.display = "block";
-    arrow.textContent = "▼";
-    folderGroup.classList.add("open");
-  } else {
+  // වර්තමාන තත්ත්වය පරීක්ෂා කරන්න
+  const isOpen = folderGroup.classList.contains("open");
+
+  if (isOpen) {
+    // වසා දමන්න
+    folderGroup.classList.remove("open");
     folderBooks.style.display = "none";
     arrow.textContent = "▶";
-    folderGroup.classList.remove("open");
+  } else {
+    // විවෘත කරන්න
+    folderGroup.classList.add("open");
+    folderBooks.style.display = "block";
+    arrow.textContent = "▼";
   }
 }
 
