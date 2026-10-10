@@ -35,11 +35,11 @@ const appsData = [
     apkUrl: "https://play.google.com/store/apps/details?id=app.vercel.matika_snowy.twa",
     webUrl: "https://pavara9803-ctrl.github.io/Matika/",
     screenshots: [
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-2.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-3.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-4.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-5.png"
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-2.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-3.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-4.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-5.webp"
     ]
   },
   {
@@ -52,10 +52,10 @@ const appsData = [
     apkUrl: "https://github.com/pavara9803-ctrl/Rupasiddhi/releases/latest/download/Rupasiddhi.apk",
     webUrl: "https://pavara9803-ctrl.github.io/Rupasiddhi/",
     screenshots: [
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-1.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-2.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-3.png",
-      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-4.png"
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-1.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-2.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-3.webp",
+      "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-4.webp"
     ]
   }
 ];
@@ -229,7 +229,6 @@ function renderBooks(books) {
     return;
   }
 
-  // ෆෝල්ඩර අනුව කාණ්ඩගත කරන්න
   const grouped = {};
   books.forEach(book => {
     const folder = book.folder || "වෙනත්";
@@ -237,7 +236,6 @@ function renderBooks(books) {
     grouped[folder].push(book);
   });
 
-  // Collapsible folder HTML සාදන්න
   container.innerHTML = Object.keys(grouped).map(folderName => `
     <div class="folder-group">
       <div class="folder-header" onclick="toggleFolder(this)">
@@ -288,7 +286,7 @@ function toggleFolder(headerElement) {
 }
 
 // ==========================================
-// Lightbox (Screenshot විශාල කර පෙන්වීම)
+// Lightbox
 // ==========================================
 function openLightbox(imageSrc, title) {
   const existing = document.getElementById("lightbox");
