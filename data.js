@@ -152,7 +152,6 @@ function renderApps(apps) {
   if (!container) return;
 
   container.innerHTML = apps.map(app => {
-    // Screenshots HTML එක සාදන්න (screenshots තිබේ නම් පමණක්)
     const screenshotsHTML = app.screenshots && app.screenshots.length > 0 ? `
       <div class="app-screenshots">
         <div class="screenshots-scroll">
@@ -188,7 +187,7 @@ function renderApps(apps) {
   }).join("");
 }
 
-// Books Table Render කිරීම (ෆෝල්ඩර අනුව කාණ්ඩගත කර)
+// Books Table Render කිරීම (ෆෝල්ඩර අනුව කාණ්ඩගත කර - Collapsible)
 function renderBooks(books) {
   const container = document.getElementById("pdfFileList");
   if (!container) return;
@@ -206,10 +205,11 @@ function renderBooks(books) {
     grouped[folder].push(book);
   });
 
-  // එක් එක් ෆෝල්ඩරය සඳහා HTML සාදන්න
-  container.innerHTML = Object.keys(grouped).map(folderName => `
+  // එක් එක් ෆෝල්ඩරය සඳහා Collapsible HTML සාදන්න
+  container.innerHTML = Object.keys(grouped).map((folderName, index) => `
     <div class="folder-group">
-      <div class="folder-header">
+      <div class="folder-header" onclick="toggleFolder(this)">
+        <span class="folder-arrow">▶</span>
         <span class="folder-icon">📁</span>
         <span class="folder-name">${folderName}</span>
         <span class="folder-count">(${grouped[folderName].length} පොත්)</span>
@@ -234,6 +234,23 @@ function renderBooks(books) {
       </div>
     </div>
   `).join("");
+}
+
+// ෆෝල්ඩරය විවෘත/වසා දැමීම
+function toggleFolder(headerElement) {
+  const folderGroup = headerElement.parentElement;
+  const folderBooks = folderGroup.querySelector(".folder-books");
+  const arrow = headerElement.querySelector(".folder-arrow");
+
+  if (folderBooks.style.display === "none" || folderBooks.style.display === "") {
+    folderBooks.style.display = "block";
+    arrow.textContent = "▼";
+    folderGroup.classList.add("open");
+  } else {
+    folderBooks.style.display = "none";
+    arrow.textContent = "▶";
+    folderGroup.classList.remove("open");
+  }
 }
 
 // ==========================================
