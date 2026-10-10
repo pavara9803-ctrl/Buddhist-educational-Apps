@@ -8,20 +8,19 @@
   <meta http-equiv="Expires" content="0">
   <title>බෞද්ධ ධර්ම පුස්තකාලය හා මෘදුකාංග</title>
 
-  <!-- Preconnect for faster loading -->
+  <!-- Preconnect (උපරිම 4ක් පමණක්) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com">
   <link rel="preconnect" href="https://buddhist-apps-default-rtdb.asia-southeast1.firebasedatabase.app">
-  <link rel="preconnect" href="https://pavara9803-ctrl.github.io">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@600;700;800&family=Gemunu+Libre:wght@500;600;700&family=Noto+Serif+Sinhala:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="main.css?v=1791631310">
+  <link rel="stylesheet" href="main.css?v=11">
 
-  <!-- Open Graph (Facebook, WhatsApp) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="බෞද්ධ ධර්ම පුස්තකාලය හා මෘදුකාංග">
   <meta property="og:description" content="අභිධර්ම ධර්ම ග්‍රන්ථ සහ බෞද්ධ අධ්‍යාපනික යෙදුම්">
   <meta property="og:type" content="website">
@@ -36,7 +35,7 @@
 
   <!-- SEO -->
   <meta name="description" content="අභිධර්ම මාතිකා, ධාතුකථා, පට්ඨාන ප්‍රකරණ ඇතුළු බෞද්ධ ධර්ම ග්‍රන්ථ සහ අධ්‍යාපනික යෙදුම්">
-  <meta name="keywords" content="අභිධර්ම, බුද්ධ ධර්මය, පාලි, පාලි ව්‍යාකරණ, රූපසිද්ධිය, අභිධර්ම මාතිකා, මාතිකා, පට්ඨාන, Buddhist, Abhidhamma, Matika, Dhammasangani, Patthana, Pali, Buddhist Apps">
+  <meta name="keywords" content="අභිධර්ම, බුද්ධ ධර්මය, පාලි, රූපසිද්ධිය, අභිධර්ම මාතිකා, පට්ඨාන, Buddhist, Abhidhamma, Matika">
   <meta name="author" content="Pavara">
 </head>
 <body>
@@ -48,7 +47,6 @@
         <span>📖</span> පුස්තකාලය
       </a>
       
-      <!-- Live Search Box -->
       <div class="search-box">
         <span class="search-icon">🔍</span>
         <input type="text" id="searchInput" placeholder="සෙවුම් පද මෙතැන යොදන්න..." oninput="filterItems()">
@@ -83,7 +81,7 @@
     (function() {
       const version = new Date().getTime();
       const script = document.createElement('script');
-      script.src = 'data.js?v=1791631310' + version;
+      script.src = 'data.js?v=' + version;
       document.body.appendChild(script);
     })();
   </script>
