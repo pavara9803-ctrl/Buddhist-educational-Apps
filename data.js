@@ -237,54 +237,51 @@
       `;
     }).join("");
   }
+// Books Table Render කිරීම
+function renderBooks(books) {
+  const container = document.getElementById("pdfFileList");
+  if (!container) return;
 
-  // Books Table Render කිරීම
-  function renderBooks(books) {
-    const container = document.getElementById("pdfFileList");
-    if (!container) return;
-
-    if (books.length === 0) {
-      container.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--text-muted);">සොයන ලද පොත හමු නොවීය.</div>`;
-      return;
-    }
-
-    const grouped = {};
-    books.forEach(book => {
-      const folder = book.folder || "වෙනත්";
-      if (!grouped[folder]) grouped[folder] = [];
-      grouped[folder].push(book);
-    });
-
-    container.innerHTML = Object.keys(grouped).map(folderName => `
-      <div class="folder-group">
-        <div class="folder-header" onclick="toggleFolder(this)">
-          <span class="folder-arrow">▶</span>
-          <span class="folder-icon">📁</span>
-          <span class="folder-name">${folderName}</span>
-          <span class="folder-count">(${grouped[folderName].length} පොත්)</span>
-        </div>
-        <div class="folder-books">
-          ${grouped[folderName].map(book => `
-            <a href="${book.pdfUrl}" 
-               class="table-row" 
-               onclick="handleDownload('${book.countKey}')"
-               download 
-               target="_blank" 
-               rel="noopener noreferrer">
-              <div class="file-col-title">
-                <span class="pdf-badge">PDF</span>
-                <span class="file-text">${book.title}</span>
-              </div>
-              <span class="file-col-cat">${book.category}</span>
-              <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
-              <span class="file-col-size">${book.size}</span>
-            </a>
-          `).join("")}
-        </div>
-      </div>
-    `).join("");
+  if (books.length === 0) {
+    container.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--text-muted);">සොයන ලද පොත හමු නොවීය.</div>`;
+    return;
   }
 
+  const grouped = {};
+  books.forEach(book => {
+    const folder = book.folder || "වෙනත්";
+    if (!grouped[folder]) grouped[folder] = [];
+    grouped[folder].push(book);
+  });
+
+  container.innerHTML = Object.keys(grouped).map(folderName => `
+    <div class="folder-group">
+      <div class="folder-header" onclick="toggleFolder(this)">
+        <span class="folder-arrow">▶</span>
+        <span class="folder-icon">📁</span>
+        <span class="folder-name">${folderName}</span>
+        <span class="folder-count">(${grouped[folderName].length} පොත්)</span>
+      </div>
+      <div class="folder-books">
+        ${grouped[folderName].map(book => `
+          <a href="${book.pdfUrl}" 
+             class="table-row" 
+             onclick="handleDownload('${book.countKey}')"
+             target="_blank" 
+             rel="noopener noreferrer">
+            <div class="file-col-title">
+              <span class="pdf-badge">PDF</span>
+              <span class="file-text">${book.title}</span>
+            </div>
+            <span class="file-col-cat">${book.category}</span>
+            <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
+            <span class="file-col-size">${book.size}</span>
+          </a>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+}
   // ෆෝල්ඩරය විවෘත/වසා දැමීම
   window.toggleFolder = function(headerElement) {
     const folderGroup = headerElement.parentElement;
