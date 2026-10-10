@@ -64,6 +64,7 @@ const appsData = [
 // PDF පොත් නාමාවලිය දත්ත
 // ==========================================
 const booksData = [
+  // ===== අභිධර්ම =====
   {
     id: 1,
     title: "අභිධර්ම මාතිකා අධ්‍යන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
@@ -133,6 +134,38 @@ const booksData = [
     size: "4.3 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-pattanaMPS.pdf",
     countKey: "abhidhamma-pattanaMPS"
+  },
+
+  // ===== විනය =====
+  {
+    id: 8,
+    title: "සමුට්ඨානසීස",
+    category: "විනය",
+    folder: "විනය",
+    downloads: 0,
+    size: "2 MB",
+    pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/vinaya/Samutthanaseesa.pdf",
+    countKey: "vinaya-samutthanaseesa"
+  },
+  {
+    id: 9,
+    title: "සප්තදසකාරය",
+    category: "විනය",
+    folder: "විනය",
+    downloads: 0,
+    size: "2 MB",
+    pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/vinaya/Sapthadasakaraya.pdf",
+    countKey: "vinaya-sapthadasakaraya"
+  },
+  {
+    id: 10,
+    title: "සීමා",
+    category: "විනය",
+    folder: "විනය",
+    downloads: 0,
+    size: "2 MB",
+    pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/vinaya/Seema.pdf",
+    countKey: "vinaya-seema"
   }
 ];
 
@@ -241,16 +274,13 @@ function toggleFolder(headerElement) {
   const folderBooks = folderGroup.querySelector(".folder-books");
   const arrow = headerElement.querySelector(".folder-arrow");
 
-  // වර්තමාන තත්ත්වය පරීක්ෂා කරන්න
   const isOpen = folderGroup.classList.contains("open");
 
   if (isOpen) {
-    // වසා දමන්න
     folderGroup.classList.remove("open");
     folderBooks.style.display = "none";
     arrow.textContent = "▶";
   } else {
-    // විවෘත කරන්න
     folderGroup.classList.add("open");
     folderBooks.style.display = "block";
     arrow.textContent = "▼";
