@@ -8,19 +8,25 @@
   <meta http-equiv="Expires" content="0">
   <title>බෞද්ධ ධර්ම පුස්තකාලය හා මෘදුකාංග</title>
 
-  <!-- Google Fonts - preconnect සමඟ -->
+  <!-- Preconnect for faster loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com">
+  <link rel="preconnect" href="https://buddhist-apps-default-rtdb.asia-southeast1.firebasedatabase.app">
+  <link rel="preconnect" href="https://pavara9803-ctrl.github.io">
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@600;700;800&family=Gemunu+Libre:wght@500;600;700&family=Noto+Serif+Sinhala:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="main.css?v=1791630893">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="main.css?v=10">
 
   <!-- Open Graph (Facebook, WhatsApp) -->
   <meta property="og:title" content="බෞද්ධ ධර්ම පුස්තකාලය හා මෘදුකාංග">
   <meta property="og:description" content="අභිධර්ම ධර්ම ග්‍රන්ථ සහ බෞද්ධ අධ්‍යාපනික යෙදුම්">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/">
-<meta property="og:image" content="https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.webp">
+  <meta property="og:image" content="https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/matika-1.webp">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -72,16 +78,12 @@
 
   </main>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
   <!-- data.js with auto cache busting -->
   <script>
     (function() {
       const version = new Date().getTime();
       const script = document.createElement('script');
-      script.src = 'data.js?v=1791630893' + version;
+      script.src = 'data.js?v=' + version;
       document.body.appendChild(script);
     })();
   </script>
