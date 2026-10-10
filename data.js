@@ -56,19 +56,20 @@ const appsData = [
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-2.png",
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-3.png",
       "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/screenshots/rupasiddhi-4.png"
-
     ]
   }
 ];
 
 // ==========================================
 // PDF පොත් නාමාවලිය දත්ත
+// (folder ක්ෂේත්‍රය මගින් ෆෝල්ඩර අනුව කාණ්ඩගත කෙරේ)
 // ==========================================
 const booksData = [
   {
     id: 1,
     title: "අභිධර්ම මාතිකා අධ්‍යන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "4.3 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-Matika.pdf",
@@ -78,6 +79,7 @@ const booksData = [
     id: 2,
     title: "අභිධර්ම චිත්තවීථි විනිශ්චය - කඩුවෙල අතුලඤාණ හිමි",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "5.7 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-cittaveeti.pdf",
@@ -87,6 +89,7 @@ const booksData = [
     id: 3,
     title: "ධාතුකථා ප්‍රකරණ අධ්‍යයන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "5.9 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-dhatukata.pdf",
@@ -96,6 +99,7 @@ const booksData = [
     id: 4,
     title: "පට්ඨාන ත්‍රි රාශිය - නාඋයනේ අරියධම්ම හිමි, කඩුවෙල අතුලඤාණ හිමි 2022",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "3.3 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-pattana3.pdf",
@@ -105,6 +109,7 @@ const booksData = [
     id: 5,
     title: "පට්ඨාන ප්‍රකරණ අධ්‍යයන ප්‍රවේශය - කඩුවෙල අතුලඤාණ හිමි 2024",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "12 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-pattanaA.pdf",
@@ -114,6 +119,7 @@ const booksData = [
     id: 6,
     title: "පට්ඨාන ප්‍රකරණ අධ්‍යයන ප්‍රවේශය, ශුද්ධ සංඛ්‍යා සහ ස්වරූපාරූඪ - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "1.4 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-pattanaS.pdf",
@@ -123,6 +129,7 @@ const booksData = [
     id: 7,
     title: "පට්ඨාන මහාපකරණ සන්නය 2 - කඩුවෙල අතුලඤාණ හිමි 2023",
     category: "අභිධර්ම",
+    folder: "අභිධර්ම",
     downloads: 0,
     size: "4.3 MB",
     pdfUrl: "https://pavara9803-ctrl.github.io/Buddhist-educational-Apps/pdfs/Abhidhamma-pattanaMPS.pdf",
@@ -181,7 +188,7 @@ function renderApps(apps) {
   }).join("");
 }
 
-// Books Table Render කිරීම
+// Books Table Render කිරීම (ෆෝල්ඩර අනුව කාණ්ඩගත කර)
 function renderBooks(books) {
   const container = document.getElementById("pdfFileList");
   if (!container) return;
@@ -191,21 +198,41 @@ function renderBooks(books) {
     return;
   }
 
-  container.innerHTML = books.map(book => `
-    <a href="${book.pdfUrl}" 
-       class="table-row" 
-       onclick="handleDownload('${book.countKey}')"
-       download 
-       target="_blank" 
-       rel="noopener noreferrer">
-      <div class="file-col-title">
-        <span class="pdf-badge">PDF</span>
-        <span class="file-text">${book.title}</span>
+  // ෆෝල්ඩර අනුව කාණ්ඩගත කරන්න
+  const grouped = {};
+  books.forEach(book => {
+    const folder = book.folder || "වෙනත්";
+    if (!grouped[folder]) grouped[folder] = [];
+    grouped[folder].push(book);
+  });
+
+  // එක් එක් ෆෝල්ඩරය සඳහා HTML සාදන්න
+  container.innerHTML = Object.keys(grouped).map(folderName => `
+    <div class="folder-group">
+      <div class="folder-header">
+        <span class="folder-icon">📁</span>
+        <span class="folder-name">${folderName}</span>
+        <span class="folder-count">(${grouped[folderName].length} පොත්)</span>
       </div>
-      <span class="file-col-cat">${book.category}</span>
-      <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
-      <span class="file-col-size">${book.size}</span>
-    </a>
+      <div class="folder-books">
+        ${grouped[folderName].map(book => `
+          <a href="${book.pdfUrl}" 
+             class="table-row" 
+             onclick="handleDownload('${book.countKey}')"
+             download 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <div class="file-col-title">
+              <span class="pdf-badge">PDF</span>
+              <span class="file-text">${book.title}</span>
+            </div>
+            <span class="file-col-cat">${book.category}</span>
+            <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
+            <span class="file-col-size">${book.size}</span>
+          </a>
+        `).join("")}
+      </div>
+    </div>
   `).join("");
 }
 
@@ -213,7 +240,6 @@ function renderBooks(books) {
 // Lightbox (Screenshot විශාල කර පෙන්වීම)
 // ==========================================
 function openLightbox(imageSrc, title) {
-  // දැනටමත් lightbox එකක් තිබේ නම් ඉවත් කරන්න
   const existing = document.getElementById("lightbox");
   if (existing) existing.remove();
 
@@ -230,7 +256,6 @@ function openLightbox(imageSrc, title) {
   };
   document.body.appendChild(lightbox);
 
-  // ESC යතුරෙන් වැසීමට
   document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") closeLightbox();
   });
@@ -245,7 +270,6 @@ function closeLightbox() {
 // Firebase Download Count Functions
 // ==========================================
 
-// සියලුම පොත් වල බාගත කිරීම් ගණන load කරන්න
 function loadAllDownloadCounts() {
   if (!db) {
     console.warn("⚠️ Firebase not initialized");
@@ -258,7 +282,6 @@ function loadAllDownloadCounts() {
   });
 }
 
-// එක් පොතක බාගත කිරීම් ගණන ලබා ගන්න
 function getDownloadCount(countKey) {
   db.ref('downloads/' + countKey).once('value')
     .then(snapshot => {
@@ -271,7 +294,6 @@ function getDownloadCount(countKey) {
     });
 }
 
-// බාගත කිරීම් ගණන වැඩි කරන්න
 function incrementDownloadCount(countKey) {
   if (!db || !countKey) return;
   
@@ -287,7 +309,6 @@ function incrementDownloadCount(countKey) {
   });
 }
 
-// Display එක යාවත්කාලීන කරන්න
 function updateCountDisplay(countKey, value) {
   const element = document.getElementById(`count-${countKey}`);
   if (element) {
@@ -295,7 +316,6 @@ function updateCountDisplay(countKey, value) {
   }
 }
 
-// බාගත කිරීම handle කිරීම
 function handleDownload(countKey) {
   if (countKey) {
     incrementDownloadCount(countKey);

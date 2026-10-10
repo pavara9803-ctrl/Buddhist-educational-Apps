@@ -395,6 +395,54 @@ body {
 }
 
 /* ==========================================
+   Folder Groups (ෆෝල්ඩර අනුව කාණ්ඩගත කිරීම)
+   ========================================== */
+.folder-group {
+  margin: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background-color: #1f1a10;
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-heading);
+  color: var(--accent-gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.folder-header:hover {
+  background-color: #2a2314;
+}
+
+.folder-icon {
+  font-size: 1.3rem;
+}
+
+.folder-name {
+  font-weight: 600;
+}
+
+.folder-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  margin-left: auto;
+}
+
+.folder-books {
+  background: var(--bg-surface);
+}
+
+/* ==========================================
    Mobile ප්‍රතිචාරාත්මක (Responsive)
    ========================================== */
 @media (max-width: 768px) {
@@ -440,6 +488,15 @@ body {
   .search-box {
     width: 100%;
     max-width: 100%;
+  }
+
+  .folder-header {
+    font-size: 1rem;
+    padding: 10px 14px;
+  }
+
+  .folder-count {
+    font-size: 0.75rem;
   }
 }
 
