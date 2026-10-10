@@ -2,7 +2,6 @@
 // Firebase SDK Dynamic Loader
 // ==========================================
 (function loadFirebase(callback) {
-  // දැනටමත් load වී ඇත්නම්
   if (typeof firebase !== 'undefined') {
     callback();
     return;
@@ -31,7 +30,6 @@
     appId: "1:59827119271:web:522edb63f4bed3191de782"
   };
 
-  // Firebase initialize කරන්න
   let db = null;
   try {
     firebase.initializeApp(firebaseConfig);
@@ -189,11 +187,11 @@
   // ==========================================
   // Render Functions
   // ==========================================
-  window.renderContent = function() {
+  function renderContent() {
     renderApps(appsData);
     renderBooks(booksData);
     loadAllDownloadCounts();
-  };
+  }
 
   // Apps Render කිරීම
   function renderApps(apps) {
@@ -237,53 +235,55 @@
       `;
     }).join("");
   }
-// Books Table Render කිරීම
-function renderBooks(books) {
-  const container = document.getElementById("pdfFileList");
-  if (!container) return;
 
-  if (books.length === 0) {
-    container.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--text-muted);">සොයන ලද පොත හමු නොවීය.</div>`;
-    return;
+  // Books Table Render කිරීම
+  function renderBooks(books) {
+    const container = document.getElementById("pdfFileList");
+    if (!container) return;
+
+    if (books.length === 0) {
+      container.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--text-muted);">සොයන ලද පොත හමු නොවීය.</div>`;
+      return;
+    }
+
+    const grouped = {};
+    books.forEach(book => {
+      const folder = book.folder || "වෙනත්";
+      if (!grouped[folder]) grouped[folder] = [];
+      grouped[folder].push(book);
+    });
+
+    container.innerHTML = Object.keys(grouped).map(folderName => `
+      <div class="folder-group">
+        <div class="folder-header" onclick="toggleFolder(this)">
+          <span class="folder-arrow">▶</span>
+          <span class="folder-icon">📁</span>
+          <span class="folder-name">${folderName}</span>
+          <span class="folder-count">(${grouped[folderName].length} පොත්)</span>
+        </div>
+        <div class="folder-books">
+          ${grouped[folderName].map(book => `
+            <a href="${book.pdfUrl}" 
+               class="table-row" 
+               onclick="handleDownload('${book.countKey}')"
+               target="_blank" 
+               rel="noopener noreferrer">
+              <div class="file-col-title">
+                <span class="pdf-badge">PDF</span>
+                <span class="file-text">${book.title}</span>
+              </div>
+              <span class="file-col-cat">${book.category}</span>
+              <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
+              <span class="file-col-size">${book.size}</span>
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
   }
 
-  const grouped = {};
-  books.forEach(book => {
-    const folder = book.folder || "වෙනත්";
-    if (!grouped[folder]) grouped[folder] = [];
-    grouped[folder].push(book);
-  });
-
-  container.innerHTML = Object.keys(grouped).map(folderName => `
-    <div class="folder-group">
-      <div class="folder-header" onclick="toggleFolder(this)">
-        <span class="folder-arrow">▶</span>
-        <span class="folder-icon">📁</span>
-        <span class="folder-name">${folderName}</span>
-        <span class="folder-count">(${grouped[folderName].length} පොත්)</span>
-      </div>
-      <div class="folder-books">
-        ${grouped[folderName].map(book => `
-          <a href="${book.pdfUrl}" 
-             class="table-row" 
-             onclick="handleDownload('${book.countKey}')"
-             target="_blank" 
-             rel="noopener noreferrer">
-            <div class="file-col-title">
-              <span class="pdf-badge">PDF</span>
-              <span class="file-text">${book.title}</span>
-            </div>
-            <span class="file-col-cat">${book.category}</span>
-            <span class="file-col-count" id="count-${book.countKey}">${book.downloads}</span>
-            <span class="file-col-size">${book.size}</span>
-          </a>
-        `).join("")}
-      </div>
-    </div>
-  `).join("");
-}
   // ෆෝල්ඩරය විවෘත/වසා දැමීම
-  window.toggleFolder = function(headerElement) {
+  function toggleFolder(headerElement) {
     const folderGroup = headerElement.parentElement;
     const folderBooks = folderGroup.querySelector(".folder-books");
     const arrow = headerElement.querySelector(".folder-arrow");
@@ -299,10 +299,10 @@ function renderBooks(books) {
       folderBooks.style.display = "block";
       arrow.textContent = "▼";
     }
-  };
+  }
 
   // Lightbox
-  window.openLightbox = function(imageSrc, title) {
+  function openLightbox(imageSrc, title) {
     const existing = document.getElementById("lightbox");
     if (existing) existing.remove();
 
@@ -322,12 +322,12 @@ function renderBooks(books) {
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") closeLightbox();
     });
-  };
+  }
 
-  window.closeLightbox = function() {
+  function closeLightbox() {
     const lightbox = document.getElementById("lightbox");
     if (lightbox) lightbox.remove();
-  };
+  }
 
   // Firebase Download Count Functions
   function loadAllDownloadCounts() {
@@ -376,14 +376,14 @@ function renderBooks(books) {
     }
   }
 
-  window.handleDownload = function(countKey) {
+  function handleDownload(countKey) {
     if (countKey) {
       incrementDownloadCount(countKey);
     }
-  };
+  }
 
   // Live Search
-  window.filterItems = function() {
+  function filterItems() {
     const query = document.getElementById("searchInput").value.trim().toLowerCase();
 
     const filteredBooks = booksData.filter(book => 
@@ -399,7 +399,17 @@ function renderBooks(books) {
 
     renderBooks(filteredBooks);
     renderApps(filteredApps);
-  };
+  }
+
+  // ==========================================
+  // Global Functions (HTML onclick සඳහා)
+  // ==========================================
+  window.toggleFolder = toggleFolder;
+  window.openLightbox = openLightbox;
+  window.closeLightbox = closeLightbox;
+  window.handleDownload = handleDownload;
+  window.filterItems = filterItems;
+  window.renderContent = renderContent;
 
   // පිටුව Load වූ පසු ආරම්භ කිරීම
   if (document.readyState === 'loading') {
